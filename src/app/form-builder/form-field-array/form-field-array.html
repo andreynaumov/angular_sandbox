@@ -1,0 +1,28 @@
+<div>
+  <div class="label">{{ config()?.label }}</div>
+
+  <div class="array">
+    @for (control of controls(); track $index; let index = $index) {
+      <div class="array-item">
+        @for (fieldSchema of fieldSchema(); track $index) {
+          @let currentControl = control.controls[fieldSchema.name];
+
+          <app-form-field
+            [customFields]="customFields()"
+            [control]="currentControl"
+            [fieldName]="fieldSchema.name"
+            [fieldSchema]="fieldSchema"
+          />
+        }
+
+        <button class="remove-button" matIconButton (click)="$event.stopPropagation(); $event.preventDefault(); removeItem(index)">
+          <mat-icon fontIcon="remove"></mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+
+  <button matIconButton (click)="$event.stopPropagation(); $event.preventDefault(); addItem()">
+    <mat-icon fontIcon="add"></mat-icon>
+  </button>
+</div>

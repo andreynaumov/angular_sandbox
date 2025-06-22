@@ -1,0 +1,7 @@
+<div>
+  <mat-form-field class="example-form-field">
+    <mat-label>{{ config()?.label }}</mat-label>
+
+    <input [readonly]="isReadonly()" matInput type="text" [formControl]="control()" />
+  </mat-form-field>
+</div>

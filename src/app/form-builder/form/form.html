@@ -1,0 +1,12 @@
+<form [formGroup]="form()" (ngSubmit)="onSubmit()">
+  @for (fieldSchema of formSchema(); track $index) {
+    <app-form-field
+      [customFields]="customFields()"
+      [control]="form().controls[fieldSchema.name]"
+      [fieldName]="fieldSchema.name"
+      [fieldSchema]="fieldSchema"
+    />
+  }
+
+  <button matButton="filled" type="submit">Submit</button>
+</form>

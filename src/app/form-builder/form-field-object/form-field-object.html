@@ -1,0 +1,14 @@
+<div>
+  <div class="label">{{ config()?.label }}</div>
+
+  <div class="group">
+    @for (fieldSchema of fieldSchema(); track $index) {
+      <app-form-field
+        [customFields]="customFields()"
+        [control]="control().controls[fieldSchema.name]"
+        [fieldName]="fieldSchema.name"
+        [fieldSchema]="fieldSchema"
+      />
+    }
+  </div>
+</div>

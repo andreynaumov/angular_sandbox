@@ -1,0 +1,7 @@
+@if (isShow()) {
+  @if (customField()) {
+    <ng-container *ngTemplateOutlet="customField()?.templateRef; context: componentInputs()" />
+  } @else {
+    <ng-container *ngComponentOutlet="componentRef(); inputs: componentInputs()" />
+  }
+}
