@@ -15,3 +15,11 @@
   top: 0;
   z-index: 1;
 }
+
+.active {
+  background: color-mix(in srgb, var(--mat-sys-primary) 10%, transparent);
+}
+
+.content {
+  padding: 24px;
+}

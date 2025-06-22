@@ -10,9 +10,9 @@
     <mat-toolbar>Menu</mat-toolbar>
 
     <mat-nav-list>
-      <a mat-list-item routerLink="example-form">Example Form</a>
-      <a mat-list-item routerLink="common-form">Common Form</a>
-      <a mat-list-item routerLink="autocomplete">Autocomplete</a>
+      <a mat-list-item routerLinkActive="active" routerLink="example-form">Example Form</a>
+      <a mat-list-item routerLinkActive="active" routerLink="common-form">Common Form</a>
+      <a mat-list-item routerLinkActive="active" routerLink="autocomplete">Autocomplete</a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -26,6 +26,8 @@
       <span>Title</span>
     </mat-toolbar>
 
-    <ng-content />
+    <div class="content">
+      <ng-content />
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
