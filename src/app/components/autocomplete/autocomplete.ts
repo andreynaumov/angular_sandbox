@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Directive } from '@angular/core';
 
-@Component({
-  selector: 'app-autocomplete',
-  imports: [],
-  templateUrl: './autocomplete.html',
-  styleUrl: './autocomplete.scss',
+@Directive({
+  selector: '[appAutocomplete]',
 })
-export class Autocomplete {}
+export class Autocomplete {
+  constructor() {}
+}
