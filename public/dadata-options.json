@@ -1,0 +1,56 @@
+{
+  "options": [
+    {
+      "value": "Value_1",
+      "unrestricted_value": "unrestricted_value_1",
+      "data": {
+        "opf": {
+          "type": "type_1",
+          "code": "code_1",
+          "full": "full_1"
+        },
+        "name": {
+          "full": "full_1"
+        },
+        "inn": "inn_1",
+        "okved": "okved_1",
+        "address": {
+          "value": "value_1",
+          "unrestricted_value": "unrestricted_value_1",
+          "data": {
+            "city_kladr_id": "city_kladr_id_1",
+            "settlement_kladr_id": "settlement_kladr_id_1"
+          }
+        },
+        "phones": "phones_1",
+        "emails": "emails_1"
+      }
+    },
+    {
+      "value": "Value_2",
+      "unrestricted_value": "unrestricted_value_2",
+      "data": {
+        "opf": {
+          "type": "type_2",
+          "code": "code_2",
+          "full": "full_2"
+        },
+        "name": {
+          "full": "full_2"
+        },
+        "inn": "inn_2",
+        "okved": "okved_2",
+        "address": {
+          "value": "value_2",
+          "unrestricted_value": "unrestricted_value_2",
+          "data": {
+            "city_kladr_id": "city_kladr_id_2",
+            "settlement_kladr_id": "settlement_kladr_id_2"
+          }
+        },
+        "phones": "phones_2",
+        "emails": "emails_2"
+      }
+    }
+  ]
+}
