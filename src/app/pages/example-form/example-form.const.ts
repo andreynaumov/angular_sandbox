@@ -1,5 +1,16 @@
+import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { DependencyType, SelectOption } from '../../components/form-builder/shared/types/form-config';
 import { FormSchema } from '../../components/form-builder/shared/types/form-schema';
+
+const groupValidator = (control: AbstractControl): ValidationErrors | null => {
+  console.log('groupValidator: ', control.value);
+  return { groupError: true };
+};
+
+const arrayValidator = (control: AbstractControl): ValidationErrors | null => {
+  console.log('arrayValidator: ', control.value);
+  return { arrayError: true };
+};
 
 export const formSchema = ({ options }: { options: Record<string, SelectOption<unknown>[]> }): FormSchema => [
   {
@@ -7,6 +18,7 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
     type: 'object',
     config: {
       label: 'BIO',
+      validators: [groupValidator],
       expressions: {
         valueChanges: ({ form, currentControlValue }) => {
           // console.log('form: ', form);
@@ -20,6 +32,7 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
         type: 'string',
         config: {
           label: 'First Name',
+          validators: [Validators.required],
           dependencies: [
             {
               type: DependencyType.Disabled,
@@ -61,6 +74,7 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
     type: 'array',
     config: {
       label: 'Siblings',
+      validators: [arrayValidator],
     },
     schema: [
       {
@@ -68,6 +82,7 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
         type: 'string',
         config: {
           label: 'Name',
+          validators: [Validators.required],
         },
       },
       {
@@ -108,6 +123,19 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
     config: {
       label: 'Marital status',
       options: options['maritalStatus'],
+      expressions: {
+        valueChanges: ({ form, currentControlValue }) => {
+          // console.log('form: ', form);
+          // console.log('controlValue: ', controlValue);
+        },
+      },
+    },
+  },
+  {
+    name: 'partner',
+    type: 'string',
+    config: {
+      label: 'Partner',
       expressions: {
         valueChanges: ({ form, currentControlValue }) => {
           // console.log('form: ', form);

@@ -1,7 +1,8 @@
-import { UntypedFormGroup } from '@angular/forms';
+import { UntypedFormGroup, ValidatorFn } from '@angular/forms';
 
 export type FormFieldConfig<T = unknown> = {
   label: string;
+  validators?: ValidatorFn[];
   options?: SelectOption<T>[];
   dependencies?: Array<{
     type: DependencyType;
