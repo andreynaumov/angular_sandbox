@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule, UntypedFormArray, UntypedFormControl,
 import { FORM_FIELD_COMPONENTS } from '../shared/constants/form-field-components';
 import { FormFieldSchema } from '../shared/types/form-schema';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { map, merge, mergeMap } from 'rxjs';
+import { map, merge, mergeMap, startWith } from 'rxjs';
 import { CustomField } from '../shared/custom-field';
 import { DependencyType } from '../shared/types/form-config';
 
@@ -72,30 +72,32 @@ export class FormField {
           throw new Error(`Control with ${sourceField} is not exists`);
         }
 
-        sourceControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((sourceControlValue) => {
-          const result = when({ form: rootControl, sourceControlValue });
+        sourceControl.valueChanges
+          .pipe(startWith(sourceControl.value), takeUntilDestroyed(this.destroyRef))
+          .subscribe((sourceControlValue) => {
+            const result = when({ form: rootControl, sourceControlValue });
 
-          switch (type) {
-            case DependencyType.Hide:
-              this.isShow.set(!result);
-              break;
+            switch (type) {
+              case DependencyType.Hide:
+                this.isShow.set(!result);
+                break;
 
-            case DependencyType.Disabled:
-              result ? this.control().disable() : this.control().enable();
-              break;
+              case DependencyType.Disabled:
+                result ? this.control().disable() : this.control().enable();
+                break;
 
-            case DependencyType.Readonly:
-              this.isReadonly.set(result);
-              break;
+              case DependencyType.Readonly:
+                this.isReadonly.set(result);
+                break;
 
-            case DependencyType.AddValidators:
-              if (validators) {
-                result ? this.control().addValidators(validators) : this.control().removeValidators(validators);
-                this.control().updateValueAndValidity();
-              }
-              break;
-          }
-        });
+              case DependencyType.AddValidators:
+                if (validators) {
+                  result ? this.control().addValidators(validators) : this.control().removeValidators(validators);
+                  this.control().updateValueAndValidity();
+                }
+                break;
+            }
+          });
       }
     });
   }
