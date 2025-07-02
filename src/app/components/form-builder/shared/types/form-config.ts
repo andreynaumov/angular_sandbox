@@ -7,6 +7,7 @@ export type FormFieldConfig<T = unknown> = {
   dependencies?: Array<{
     type: DependencyType;
     sourceField: string;
+    validators?: ValidatorFn[];
     when: (params: { form: UntypedFormGroup; sourceControlValue: any }) => boolean;
   }>;
   expressions?: {
@@ -23,4 +24,5 @@ export enum DependencyType {
   Hide,
   Disabled,
   Readonly,
+  AddValidators,
 }

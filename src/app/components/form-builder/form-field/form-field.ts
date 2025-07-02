@@ -65,7 +65,7 @@ export class FormField {
 
       if (!dependencies) return;
 
-      for (const { sourceField, type, when } of dependencies) {
+      for (const { sourceField, type, when, validators } of dependencies) {
         const sourceControl = this.findControlByName(sourceField, this.getRootControl());
 
         if (!sourceControl) {
@@ -86,6 +86,13 @@ export class FormField {
 
             case DependencyType.Readonly:
               this.isReadonly.set(result);
+              break;
+
+            case DependencyType.AddValidators:
+              if (validators) {
+                result ? this.control().addValidators(validators) : this.control().removeValidators(validators);
+                this.control().updateValueAndValidity();
+              }
               break;
           }
         });

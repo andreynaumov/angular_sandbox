@@ -3,12 +3,12 @@ import { DependencyType, SelectOption } from '../../components/form-builder/shar
 import { FormSchema } from '../../components/form-builder/shared/types/form-schema';
 
 const groupValidator = (control: AbstractControl): ValidationErrors | null => {
-  console.log('groupValidator: ', control.value);
+  // console.log('groupValidator: ', control.value);
   return { groupError: true };
 };
 
 const arrayValidator = (control: AbstractControl): ValidationErrors | null => {
-  console.log('arrayValidator: ', control.value);
+  // console.log('arrayValidator: ', control.value);
   return { arrayError: true };
 };
 
@@ -118,24 +118,28 @@ export const formSchema = ({ options }: { options: Record<string, SelectOption<u
     },
   },
   {
+    name: 'partner',
+    type: 'string',
+    config: {
+      label: 'Partner',
+      dependencies: [
+        {
+          type: DependencyType.AddValidators,
+          sourceField: 'maritalStatus',
+          validators: [Validators.required],
+          when: ({ sourceControlValue }) => {
+            return sourceControlValue === 'married';
+          },
+        },
+      ],
+    },
+  },
+  {
     name: 'maritalStatus',
     type: 'select',
     config: {
       label: 'Marital status',
       options: options['maritalStatus'],
-      expressions: {
-        valueChanges: ({ form, currentControlValue }) => {
-          // console.log('form: ', form);
-          // console.log('controlValue: ', controlValue);
-        },
-      },
-    },
-  },
-  {
-    name: 'partner',
-    type: 'string',
-    config: {
-      label: 'Partner',
       expressions: {
         valueChanges: ({ form, currentControlValue }) => {
           // console.log('form: ', form);
