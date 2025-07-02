@@ -65,19 +65,19 @@ export class FormField {
 
       if (!dependencies) return;
 
-      for (const { sourceField, type, when, validators } of dependencies) {
-        const sourceControl = this.findControlByName(sourceField, this.getRootControl());
+      for (const dependency of dependencies) {
+        const sourceControl = this.findControlByName(dependency.sourceField, rootControl);
 
         if (!sourceControl) {
-          throw new Error(`Control with ${sourceField} is not exists`);
+          throw new Error(`Control with ${dependency.sourceField} is not exists`);
         }
 
         sourceControl.valueChanges
           .pipe(startWith(sourceControl.value), takeUntilDestroyed(this.destroyRef))
           .subscribe((sourceControlValue) => {
-            const result = when({ form: rootControl, sourceControlValue });
+            const result = dependency.when({ form: rootControl, sourceControlValue });
 
-            switch (type) {
+            switch (dependency.type) {
               case DependencyType.Hide:
                 this.isShow.set(!result);
                 break;
@@ -91,10 +91,8 @@ export class FormField {
                 break;
 
               case DependencyType.AddValidators:
-                if (validators) {
-                  result ? this.control().addValidators(validators) : this.control().removeValidators(validators);
-                  this.control().updateValueAndValidity();
-                }
+                result ? this.control().addValidators(dependency.validators) : this.control().removeValidators(dependency.validators);
+                this.control().updateValueAndValidity();
                 break;
             }
           });
