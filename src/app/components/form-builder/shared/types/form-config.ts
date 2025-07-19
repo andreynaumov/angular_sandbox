@@ -2,6 +2,8 @@ import { UntypedFormGroup, ValidatorFn } from '@angular/forms';
 
 export type FormFieldConfig<T = unknown> = {
   label: string;
+  cssClasses?: string[];
+  cssStyles?: Record<string, string>;
   validators?: ValidatorFn[];
   options?: SelectOption<T>[];
   dependencies?: Dependency[];

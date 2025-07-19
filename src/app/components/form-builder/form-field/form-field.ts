@@ -15,6 +15,10 @@ import { findControlByName } from '../shared/functions/find-control-by-name';
   imports: [NgComponentOutlet, ReactiveFormsModule, NgTemplateOutlet],
   templateUrl: './form-field.html',
   styleUrl: './form-field.scss',
+  host: {
+    '[class]': 'cssClasses()',
+    '[style]': 'cssStyles()',
+  },
 })
 export class FormField {
   private readonly destroyRef = inject(DestroyRef);
@@ -43,6 +47,13 @@ export class FormField {
       ? { ...commonInputs, fieldSchema: fieldSchema.schema, customFields: this.customFields() }
       : { ...commonInputs, isReadonly: this.isReadonly() };
   });
+
+  public readonly cssClasses = computed(
+    () =>
+      `${this.fieldSchema().config?.cssClasses?.join(' ') ?? ''} ${this.isShow() ? 'd-block' : 'd-none'} ${this.isReadonly() ? 'readonly' : ''}`,
+  );
+
+  public readonly cssStyles = computed(() => this.fieldSchema().config?.cssStyles ?? {});
 
   constructor() {
     effect(() => {
