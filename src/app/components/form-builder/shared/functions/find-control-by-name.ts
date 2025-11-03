@@ -1,5 +1,23 @@
 import { AbstractControl, FormArray, FormGroup, UntypedFormGroup } from '@angular/forms';
 
+/**
+ * Рекурсивно ищет контрол формы по имени внутри структуры формы.
+ * Ищет через FormGroups и FormArrays, чтобы найти целевой контрол.
+ *
+ * @param controlName - Имя контрола для поиска
+ * @param rootControl - Корневой контрол, с которого начинается поиск
+ * @returns Найденный контрол или null, если не найден
+ *
+ * @example
+ * ```typescript
+ * const form = new FormGroup({
+ *   user: new FormGroup({
+ *     email: new FormControl('test@example.com')
+ *   })
+ * });
+ * const emailControl = findControlByName('email', form);
+ * ```
+ */
 export function findControlByName(controlName: string, rootControl: AbstractControl): AbstractControl | null {
   if (rootControl instanceof FormGroup) {
     /**

@@ -10,6 +10,10 @@ import { getRootControl } from '../shared/functions/get-root-control';
 import { findControlByName } from '../shared/functions/find-control-by-name';
 import { FormModel } from '../shared/types/form-model';
 
+/**
+ * Компонент динамического поля формы, который рендерит соответствующий тип поля на основе схемы.
+ * Обрабатывает зависимости полей, видимость, валидацию и рендеринг пользовательских полей.
+ */
 @Component({
   selector: 'app-form-field',
   imports: [NgComponentOutlet, ReactiveFormsModule, NgTemplateOutlet],
@@ -61,6 +65,10 @@ export class FormField implements OnDestroy {
 
   readonly #valueChangesSubscriptions = new Map<string, Subscription>();
 
+  /**
+   * Эффект, который настраивает зависимости полей (hide, disable, readonly, validators).
+   * Подписывается на изменения исходного поля и соответственно обновляет текущее поле.
+   */
   readonly dependenciesEffect = effect(() => {
     const control = untracked(this.control);
     const fieldSchema = untracked(this.fieldSchema);

@@ -6,6 +6,12 @@ import { map, merge, mergeMap } from 'rxjs';
 import { getRootControl } from '../functions/get-root-control';
 import { FormModel } from '../types/form-model';
 
+/**
+ * Базовый класс для всех компонентов полей формы.
+ * Предоставляет общий функционал для управления контролами, конфигурацией и изменениями значений.
+ *
+ * @template T - Тип контрола формы (FormControl, FormGroup или FormArray)
+ */
 @Directive()
 export abstract class BaseFormField<T extends UntypedFormControl | UntypedFormGroup | UntypedFormArray> {
   protected readonly cdr = inject(ChangeDetectorRef);
@@ -23,6 +29,10 @@ export abstract class BaseFormField<T extends UntypedFormControl | UntypedFormGr
     ),
   );
 
+  /**
+   * Эффект, который выполняет пользовательское выражение valueChanges при изменении значения контрола.
+   * Полезен для реализации пользовательской логики при изменении значений (например, обновление других полей).
+   */
   valueChangeExpressionEffect = effect(() => {
     const valueChangesFn = untracked(this.config).expressions?.valueChanges;
 

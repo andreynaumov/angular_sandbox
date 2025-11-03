@@ -17,6 +17,10 @@ export class FormFieldArray extends CompositeFormField<UntypedFormArray> {
     () => this.control().controls as FormGroup<Record<string, UntypedFormArray | UntypedFormGroup | UntypedFormControl>>[],
   );
 
+  /**
+   * Добавляет новый элемент в массив формы.
+   * Создает новую группу формы на основе схемы поля.
+   */
   public addItem() {
     const parentControlArray = this.control();
     const fieldSchema = this.fieldSchema();
@@ -29,6 +33,11 @@ export class FormFieldArray extends CompositeFormField<UntypedFormArray> {
     parentControlArray.push(newControl);
   }
 
+  /**
+   * Удаляет элемент из массива формы по указанному индексу.
+   *
+   * @param controlIndex - Индекс элемента для удаления
+   */
   public removeItem(controlIndex: number) {
     this.control().removeAt(controlIndex);
   }

@@ -7,6 +7,24 @@ import { FormSchema } from '../shared/types/form-schema';
 import { FormModel } from '../shared/types/form-model';
 import { buildForm } from '../shared/functions/build-form.function';
 
+/**
+ * Главный компонент динамической формы.
+ * Строит форму на основе схемы и обрабатывает отправку.
+ * Поддерживает пользовательский рендеринг полей через content projection.
+ *
+ * @example
+ * ```typescript
+ * <app-form
+ *   [form]="myForm"
+ *   [formSchema]="schema"
+ *   [formModel]="initialData"
+ *   (submitEvent)="onSubmit($event)">
+ *   <ng-template appCustomField="customFieldName" let-control="control">
+ *     <!-- Шаблон пользовательского поля -->
+ *   </ng-template>
+ * </app-form>
+ * ```
+ */
 @Component({
   selector: 'app-form',
   imports: [ReactiveFormsModule, FormField, MatButtonModule],
@@ -32,6 +50,10 @@ export class Form implements OnInit {
     return this.customFields().find((customField) => customField.name() === fieldName);
   }
 
+  /**
+   * Обрабатывает отправку формы.
+   * Отправляет сырое значение формы, включая отключенные контролы.
+   */
   public onSubmit() {
     this.submitEvent.emit(this.form().getRawValue());
   }

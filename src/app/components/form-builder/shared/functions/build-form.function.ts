@@ -2,6 +2,23 @@ import { FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup } fro
 import { FormModel } from '../types/form-model';
 import { FormSchema } from '../types/form-schema';
 
+/**
+ * Рекурсивно строит структуру формы на основе предоставленной схемы.
+ *
+ * @param params - Объект конфигурации для построения формы
+ * @param params.form - Группа формы для заполнения контролами
+ * @param params.schema - Определение схемы, описывающее структуру формы
+ * @param params.model - Опциональная модель данных для заполнения формы начальными значениями
+ *
+ * @example
+ * ```typescript
+ * const form = new FormGroup({});
+ * const schema: FormSchema = [
+ *   { name: 'email', type: 'string', config: { label: 'Email' } }
+ * ];
+ * buildForm({ form, schema, model: { email: 'test@example.com' } });
+ * ```
+ */
 export function buildForm(params: {
   form: FormGroup<Record<string, UntypedFormControl | UntypedFormGroup | UntypedFormArray>>;
   schema: FormSchema;
