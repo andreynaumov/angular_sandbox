@@ -2,6 +2,6 @@
   @if (currentCustomField()) {
     <ng-container *ngTemplateOutlet="currentCustomField(); context: componentInputs()" />
   } @else {
-    <ng-container *ngComponentOutlet="componentRef(); inputs: componentInputs()" />
+    <ng-container *ngComponentOutlet="$any(componentRef()); inputs: componentInputs()" />
   }
 }
