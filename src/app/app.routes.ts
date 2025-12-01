@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'autocomplete',
     loadComponent: () => import('./pages/example-autocomplete/example-autocomplete').then((f) => f.ExampleAutocomplete),
   },
+  {
+    path: 'ui-input',
+    loadComponent: () => import('./pages/ui-input/ui-input').then((f) => f.UiInput),
+  },
 ];
