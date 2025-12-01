@@ -1,0 +1,16 @@
+<div class="input-field" [style]="{ 'margin-bottom': '10px' }">
+  <div class="input-field-main">
+    <input
+      type="checkbox"
+      [id]="name()"
+      [checked]="value"
+      [disabled]="control.disabled"
+      [readonly]="readonly()"
+      [class.invalid]="control.invalid"
+      [attr.aria-invalid]="control.invalid"
+      (change)="updateValue($event)"
+    />
+
+    <label class="input-field-label" [for]="name()">{{ label() ?? 'DEFINE_LABEL' }}</label>
+  </div>
+</div>
