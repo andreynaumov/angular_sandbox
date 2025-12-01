@@ -1,1 +1,6 @@
-<p>ui-input works!</p>
+<ui-old-input label="Some label" placeholder="Input ..." [errorMessages]="validationErrorMessages" [formControl]="control" />
+
+<ui-old-checkbox label="Toggle disable state" [formControl]="disableFlag" />
+<ui-old-checkbox label="Toggle touched state" [formControl]="touchedFlag" />
+
+<pre>{{ controlInfo | json }}</pre>

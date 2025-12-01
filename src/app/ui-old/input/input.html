@@ -1,0 +1,25 @@
+<div class="input-field" [style]="{ 'margin-bottom': '10px' }">
+  <div class="input-field-main">
+    <label class="input-field-label" [for]="name()">{{ label() ?? 'DEFINE_LABEL' }}</label>
+
+    <input
+      type="text"
+      [placeholder]="placeholder() ?? 'DEFINE_PLACEHOLDER'"
+      [id]="name()"
+      [value]="value"
+      [disabled]="control.disabled"
+      [readonly]="readonly()"
+      [attr.aria-invalid]="control.invalid"
+      (input)="updateValue($event)"
+      (blur)="onBlur()"
+    />
+  </div>
+
+  @if (control.invalid && control.touched && control.errors) {
+    <div class="input-field-errors">
+      @for (error of control.errors | keyvalue; track $index) {
+        <span [style]="{ color: 'red' }">{{ errorMessages()[error.key] }}</span>
+      }
+    </div>
+  }
+</div>
