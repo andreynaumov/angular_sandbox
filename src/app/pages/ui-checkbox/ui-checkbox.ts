@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxOld } from '../../ui-old/checkbox/checkbox';
 import { JsonPipe } from '@angular/common';
+import { CheckboxOld } from '@ui-old/checkbox/checkbox';
 
 @Component({
   selector: 'app-ui-checkbox',

@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { formSchema } from './common-form.const';
-import { FormSchema } from '../../components/form-builder/shared/types/form-schema';
-import { FormModel } from '../../components/form-builder/shared/types/form-model';
-import { Form } from '../../components/form-builder/form/form';
 import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { optionsMock } from './mocks/options.mock';
 import { formModel } from './mocks/model.mock';
+import { Form } from '@form-builder/form/form';
+import { FormModel } from '@form-builder/shared/types/form-model';
+import { FormSchema } from '@form-builder/shared/types/form-schema';
 
 @Component({
   selector: 'app-common-form',

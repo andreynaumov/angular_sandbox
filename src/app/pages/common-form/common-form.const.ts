@@ -1,5 +1,5 @@
-import { SelectOption } from '../../components/form-builder/shared/types/form-config';
-import { FormSchema } from '../../components/form-builder/shared/types/form-schema';
+import { SelectOption } from '@form-builder/shared/types/form-config';
+import { FormSchema } from '@form-builder/shared/types/form-schema';
 
 export const formSchema = ({ options }: { options: Record<string, SelectOption<unknown>[]> }): FormSchema => [
   {

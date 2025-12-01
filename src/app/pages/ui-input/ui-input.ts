@@ -1,8 +1,8 @@
 import { Component, effect, ElementRef, OnInit, viewChild } from '@angular/core';
-import { InputOld } from '../../ui-old/input/input';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import { CheckboxOld } from '../../ui-old/checkbox/checkbox';
+import { InputOld } from '@ui-old/input/input';
+import { CheckboxOld } from '@ui-old/checkbox/checkbox';
 
 @Component({
   selector: 'app-ui-input',

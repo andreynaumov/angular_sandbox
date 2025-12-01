@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimitiveFormField } from '../shared/abstractions/primitive-form-field';
-import { InputOld } from '../../../ui-old/input/input';
+import { InputOld } from '@ui-old/input/input';
 
 @Component({
   selector: 'app-form-field-input',

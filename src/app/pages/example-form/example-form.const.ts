@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, Validators } from '@angular/forms';
-import { DependencyType, SelectOption } from '../../components/form-builder/shared/types/form-config';
-import { FormSchema } from '../../components/form-builder/shared/types/form-schema';
+import { DependencyType, SelectOption } from '@form-builder/shared/types/form-config';
+import { FormSchema } from '@form-builder/shared/types/form-schema';
 
 const groupValidator = (control: AbstractControl): ValidationErrors | null => {
   // console.log('groupValidator: ', control.value);

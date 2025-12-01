@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimitiveFormField } from '../shared/abstractions/primitive-form-field';
-import { CheckboxOld } from '../../../ui-old/checkbox/checkbox';
+import { CheckboxOld } from '@ui-old/checkbox/checkbox';
 
 @Component({
   selector: 'app-form-field-boolean',

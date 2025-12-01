@@ -6,7 +6,19 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@form-builder/*": [
+        "src/app/shared/form-builder/*"
+      ],
+      "@ui-old/*": [
+        "src/app/shared/ui-old/*"
+      ],
+      "@storage-service/*": [
+        "src/app/shared/storage-service/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"
