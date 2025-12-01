@@ -1,33 +1,9 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <mat-toolbar>Menu</mat-toolbar>
+<ul class="sidenav normalize-list">
+  <li routerLinkActive="active"><a routerLink="example-form">Example Form</a></li>
+  <li routerLinkActive="active"><a routerLink="common-form">Common Form</a></li>
+  <li routerLinkActive="active"><a routerLink="autocomplete">Autocomplete</a></li>
+</ul>
 
-    <mat-nav-list>
-      <a mat-list-item routerLinkActive="active" routerLink="example-form">Example Form</a>
-      <a mat-list-item routerLinkActive="active" routerLink="common-form">Common Form</a>
-      <a mat-list-item routerLinkActive="active" routerLink="autocomplete">Autocomplete</a>
-    </mat-nav-list>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      @if (isHandset$ | async) {
-        <button type="button" aria-label="Toggle sidenav" matIconButton (click)="drawer.toggle()">
-          <mat-icon aria-label="Side nav toggle icon">Menu</mat-icon>
-        </button>
-      }
-      <span>Title</span>
-    </mat-toolbar>
-
-    <div class="content">
-      <ng-content />
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="content">
+  <ng-content />
+</div>
