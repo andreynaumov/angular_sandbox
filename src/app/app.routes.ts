@@ -22,4 +22,8 @@ export const routes: Routes = [
     path: 'ui-input',
     loadComponent: () => import('./pages/ui-input/ui-input').then((f) => f.UiInput),
   },
+  {
+    path: 'ui-checkbox',
+    loadComponent: () => import('./pages/ui-checkbox/ui-checkbox').then((f) => f.UiCheckbox),
+  },
 ];
