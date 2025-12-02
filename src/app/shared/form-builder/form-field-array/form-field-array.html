@@ -18,13 +18,11 @@
         }
 
         <button class="remove-button" matIconButton (click)="$event.stopPropagation(); $event.preventDefault(); removeItem(index)">
-          <mat-icon fontIcon="remove"></mat-icon>
+          remove-icon
         </button>
       </div>
     }
   </div>
 
-  <button matIconButton (click)="$event.stopPropagation(); $event.preventDefault(); addItem()">
-    <mat-icon fontIcon="add"></mat-icon>
-  </button>
+  <button matIconButton (click)="$event.stopPropagation(); $event.preventDefault(); addItem()">add-icon</button>
 </div>

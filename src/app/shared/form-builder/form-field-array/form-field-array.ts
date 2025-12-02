@@ -1,14 +1,12 @@
 import { Component, computed, forwardRef } from '@angular/core';
 import { FormGroup, UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FormField } from '../form-field/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { buildForm } from '../shared/functions/build-form.function';
 import { CompositeFormField } from '../shared/abstractions/composite-form-field';
 
 @Component({
   selector: 'app-form-field-array',
-  imports: [forwardRef(() => FormField), MatButtonModule, MatIconModule],
+  imports: [forwardRef(() => FormField)],
   templateUrl: './form-field-array.html',
   styleUrl: './form-field-array.scss',
 })

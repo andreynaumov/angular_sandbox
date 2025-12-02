@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { formSchema } from './common-form.const';
 import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { optionsMock } from './mocks/options.mock';
 import { formModel } from './mocks/model.mock';
 import { Form } from '@form-builder/form/form';
@@ -10,7 +9,7 @@ import { FormSchema } from '@form-builder/shared/types/form-schema';
 
 @Component({
   selector: 'app-common-form',
-  imports: [Form, ReactiveFormsModule, MatCheckboxModule],
+  imports: [Form, ReactiveFormsModule],
   templateUrl: './common-form.html',
   styleUrl: './common-form.scss',
 })

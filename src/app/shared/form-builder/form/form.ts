@@ -1,7 +1,6 @@
 import { Component, contentChildren, input, OnInit, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FormField } from '../form-field/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { CustomField } from '../shared/custom-field';
 import { FormSchema } from '../shared/types/form-schema';
 import { FormModel } from '../shared/types/form-model';
@@ -27,7 +26,7 @@ import { buildForm } from '../shared/functions/build-form.function';
  */
 @Component({
   selector: 'app-form',
-  imports: [ReactiveFormsModule, FormField, MatButtonModule],
+  imports: [ReactiveFormsModule, FormField],
   templateUrl: './form.html',
   styleUrl: './form.scss',
 })
