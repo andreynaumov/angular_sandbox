@@ -1,0 +1,49 @@
+@let formSchema = schema();
+
+@for (schema of formSchema.schemas(); track $index) {
+  @if (schema.isControlSchema()) {
+    @let isShow = !schema.value().isHide();
+
+    @if (isShow) {
+      @let control = schema.value().control;
+      @let name = schema.meta().name;
+      @let label = schema.meta().label();
+      @let placeholder = schema.meta().placeholder();
+      @let blurFn = schema.meta().blurFn;
+      @let options = schema.meta().options();
+
+      @switch (schema.meta().type()) {
+        @case ('input') {
+          <ui-old-input
+            [formControl]="control"
+            [name]="name"
+            [label]="label"
+            [placeholder]="placeholder"
+            (blurEvent)="blurFn(control.value)"
+          />
+        }
+        @case ('checkbox') {
+          <ui-old-checkbox [formControl]="control" [name]="name" [label]="label" />
+        }
+        @case ('date') {
+          <ui-old-datepicker
+            [formControl]="control"
+            [name]="name"
+            [label]="label"
+            [placeholder]="placeholder"
+            (blurEvent)="blurFn(control.value)"
+          />
+        }
+        @case ('select') {
+          <ui-old-select [formControl]="control" [name]="name" [label]="label" [placeholder]="placeholder" [options]="options" />
+        }
+      }
+    }
+  }
+
+  @if (schema.isGroupSchema()) {
+    <div [style]="{ padding: '10px 20px' }">
+      <app-form-field-list [schema]="schema" />
+    </div>
+  }
+}
