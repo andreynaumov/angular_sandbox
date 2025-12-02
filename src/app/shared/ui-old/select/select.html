@@ -1,0 +1,25 @@
+<div class="ui-select" (click)="toggle()">
+  <div class="ui-select__value">
+    {{ selectValue() }}
+  </div>
+
+  <div class="ui-select__arrow">▾</div>
+</div>
+
+@if (isOpen()) {
+  <div class="ui-select__dropdown" (click)="$event.stopPropagation()">
+    @for (option of options(); track $index) {
+      <div class="ui-select__option" [class.selected]="option.value === value()" (click)="select(option)">
+        {{ option.label }}
+      </div>
+    }
+  </div>
+}
+
+@if (control.invalid && control.touched && control.errors) {
+  <div class="input-field-errors">
+    @for (error of control.errors | keyvalue; track $index) {
+      <span [style]="{ color: 'red' }">{{ errorMessages()[error.key] }}</span>
+    }
+  </div>
+}

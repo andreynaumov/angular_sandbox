@@ -1,1 +1,12 @@
-<p>ui-select works!</p>
+<ui-old-select placeholder="Select value" [options]="options()" [errorMessages]="validationErrorMessages" [formControl]="control" />
+
+<ui-old-checkbox label="Toggle disable state" [formControl]="disableFlag" />
+<ui-old-checkbox label="Toggle touched state" [formControl]="touchedFlag" />
+
+<ui-old-input label="Value for update" placeholder="Input value for update select" [formControl]="valueForUpdate" />
+
+<button (click)="updateValue()">update value</button>
+<button (click)="resetValue()">reset value</button>
+<button (click)="updateOptions()">update options</button>
+
+<pre>{{ controlInfo | json }}</pre>
