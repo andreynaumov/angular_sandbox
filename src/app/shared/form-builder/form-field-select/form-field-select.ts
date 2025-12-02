@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import { PrimitiveFormField } from '../shared/abstractions/primitive-form-field';
-import { KeyValuePipe } from '@angular/common';
+import { SelectOld } from '@ui-old/select/select';
 
 @Component({
   selector: 'app-form-field-select',
-  imports: [ReactiveFormsModule, MatSelectModule, KeyValuePipe],
+  imports: [ReactiveFormsModule, SelectOld],
   templateUrl: './form-field-select.html',
   styleUrl: './form-field-select.scss',
 })
-export class FormFieldSelect extends PrimitiveFormField {}
+export class FormFieldSelect extends PrimitiveFormField {
+  public readonly options = computed(() => {
+    return this.config().options?.map((option) => ({ label: option.viewValue, value: option.value })) ?? [];
+  });
+}

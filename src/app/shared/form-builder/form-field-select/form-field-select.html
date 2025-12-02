@@ -1,17 +1,1 @@
-<div>
-  <mat-form-field>
-    <mat-label>{{ config().label }}</mat-label>
-
-    <mat-select [formControl]="control()" (selectionChange)="onSelectEvent()">
-      @for (option of config().options; track option.value) {
-        <mat-option [value]="option.value">{{ option.viewValue }}</mat-option>
-      }
-    </mat-select>
-
-    @if (control().invalid && control().touched) {
-      @for (errorKey of control().errors | keyvalue; track errorKey.key) {
-        <mat-error>{{ validationErrors()[errorKey.key] || 'Неверное значение' }}</mat-error>
-      }
-    }
-  </mat-form-field>
-</div>
+<ui-old-select [formControl]="control()" [options]="options()" [errorMessages]="$any(validationErrors())" [placeholder]="config().label" />
