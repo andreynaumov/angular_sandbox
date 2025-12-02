@@ -1,0 +1,6 @@
+<app-form-field-list [schema]="formSchema()" />
+<pre>value: {{ form.value | json }}</pre>
+
+<button (click)="handle()">add</button>
+<button (click)="updateForm()">update form</button>
+<button (click)="submit()">form value</button>
