@@ -22,4 +22,8 @@ export const routes: Routes = [
     path: 'ui-checkbox',
     loadComponent: () => import('./pages/ui-checkbox/ui-checkbox').then((f) => f.UiCheckbox),
   },
+  {
+    path: 'ui-datepicker',
+    loadComponent: () => import('./pages/ui-datepicker/ui-datepicker').then((f) => f.UiDatepicker),
+  },
 ];
