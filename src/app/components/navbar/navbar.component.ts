@@ -7,4 +7,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.scss',
   imports: [RouterLink, RouterLinkActive],
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  menuItems = [
+    { link: 'example-form', label: 'Example Form' },
+    { link: 'common-form', label: 'Common Form' },
+    { link: 'ui-input', label: 'UI Input' },
+    { link: 'ui-checkbox', label: 'UI Checkbox' },
+    { link: 'ui-datepicker', label: 'UI Datepicker' },
+  ];
+}

@@ -1,9 +1,9 @@
 <ul class="sidenav normalize-list">
-  <li routerLinkActive="active"><a routerLink="example-form">Example Form</a></li>
-  <li routerLinkActive="active"><a routerLink="common-form">Common Form</a></li>
-  <li routerLinkActive="active"><a routerLink="ui-input">UI Input</a></li>
-  <li routerLinkActive="active"><a routerLink="ui-checkbox">UI Checkbox</a></li>
-  <li routerLinkActive="active"><a routerLink="ui-datepicker">UI Datepicker</a></li>
+  @for (menuItem of menuItems; track $index) {
+    <li [routerLink]="menuItem.link" routerLinkActive="active">
+      <a>{{ menuItem.label }}</a>
+    </li>
+  }
 </ul>
 
 <div class="content">

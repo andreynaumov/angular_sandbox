@@ -30,13 +30,12 @@ ul {
   list-style: none;
 
   & li {
-    margin-bottom: 10px;
-    padding: 10px;
+    padding: 15px 10px;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   & li.active {
     background-color: rgb(191, 191, 191);
-    cursor: pointer;
   }
 }
