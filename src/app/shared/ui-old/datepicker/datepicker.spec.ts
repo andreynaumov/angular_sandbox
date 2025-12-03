@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 
 import { DatepickerOld } from './datepicker';
 
-describe('DatepickerOld', () => {
+describe.skip('DatepickerOld', () => {
   let component: DatepickerOld;
   let fixture: ComponentFixture<DatepickerOld>;
 

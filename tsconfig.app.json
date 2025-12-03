@@ -7,21 +7,6 @@
     "types": [
       "node"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@form-builder/*": [
-        "src/app/shared/form-builder/*"
-      ],
-      "@form-builder-v2/*": [
-        "src/app/shared/form-builder-v2/*"
-      ],
-      "@ui-old/*": [
-        "src/app/shared/ui-old/*"
-      ],
-      "@storage-service/*": [
-        "src/app/shared/storage-service/*"
-      ]
-    }
   },
   "include": [
     "src/**/*.ts"

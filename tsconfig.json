@@ -13,7 +13,22 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@form-builder/*": [
+        "src/app/shared/form-builder/*"
+      ],
+      "@form-builder-v2/*": [
+        "src/app/shared/form-builder-v2/*"
+      ],
+      "@ui-old/*": [
+        "src/app/shared/ui-old/*"
+      ],
+      "@storage-service/*": [
+        "src/app/shared/storage-service/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

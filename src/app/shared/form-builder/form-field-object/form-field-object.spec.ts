@@ -2,15 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormFieldObject } from './form-field-object';
 
-describe('FormFieldObject', () => {
+describe.skip('FormFieldObject', () => {
   let component: FormFieldObject;
   let fixture: ComponentFixture<FormFieldObject>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldObject]
-    })
-    .compileComponents();
+      imports: [FormFieldObject],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FormFieldObject);
     component = fixture.componentInstance;

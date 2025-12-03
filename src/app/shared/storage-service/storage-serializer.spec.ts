@@ -5,7 +5,7 @@ describe('StorageSerializer', () => {
 
   beforeEach(() => {
     serializer = new StorageSerializer();
-    spyOn(console, 'error');
+    vi.spyOn(console, 'error');
   });
 
   it('should serialize and deserialize primitives', () => {

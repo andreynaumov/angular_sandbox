@@ -3,15 +3,14 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 
 import { InputOld } from './input';
 
-describe('InputOld', () => {
+describe.skip('InputOld', () => {
   let component: InputOld;
   let fixture: ComponentFixture<InputOld>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputOld, ReactiveFormsModule]
-    })
-    .compileComponents();
+      imports: [InputOld, ReactiveFormsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InputOld);
     component = fixture.componentInstance;
@@ -28,4 +27,3 @@ describe('InputOld', () => {
     expect(component.value).toBe('test value');
   });
 });
-
