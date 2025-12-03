@@ -1,15 +1,29 @@
-<div class="ui-select" (click)="toggle()">
-  <div class="ui-select__value">
+<div
+  [class]="{
+    'border-red-500': control.invalid && control.touched,
+    'bg-gray-100': control.disabled,
+  }"
+  class="border border-solid border-gray-300 px-[12px] py-[16px] rounded-md cursor-pointer flex justify-between items-center"
+  (click)="toggle()"
+>
+  <div [class.text-red-500]="control.invalid && control.touched">
     {{ selectedOption()?.label ?? label() }}
   </div>
 
-  <div class="ui-select__arrow">▾</div>
+  <ng-container *ngTemplateOutlet="chevronRight" />
 </div>
 
 @if (isOpen()) {
-  <div class="ui-select__dropdown" (click)="$event.stopPropagation()">
+  <div
+    class="border border-solid border-gray-300 absolute mt-[4px] bg-white rounded-md w-full z-1000 overflow-auto"
+    (click)="$event.stopPropagation()"
+  >
     @for (option of options(); track $index) {
-      <div class="ui-select__option" [class.selected]="option.value === value()" (click)="select(option)">
+      <div
+        class="px-[12px] py-[16px] cursor-pointer hover:bg-gray-100"
+        [class.bg-gray-100]="option.value === value()"
+        (click)="select(option)"
+      >
         {{ option.label }}
       </div>
     }
@@ -17,9 +31,23 @@
 }
 
 @if (control.invalid && control.touched && control.errors) {
-  <div class="input-field-errors">
+  <div class="mt-[4px] text-xs">
     @for (error of control.errors | keyvalue; track $index) {
-      <span [style]="{ color: 'red' }">{{ errorMessages()[error.key] }}</span>
+      <span class="text-red-500">{{ errorMessages()[error.key] }}</span>
     }
   </div>
 }
+
+<ng-template #chevronRight>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="size-6 transition-transform duration-300"
+    [class]="isOpen() ? 'rotate-270' : 'rotate-90'"
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+  </svg>
+</ng-template>

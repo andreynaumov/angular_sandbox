@@ -1,6 +1,7 @@
-<div class="input-field" [style]="{ 'margin-bottom': '10px' }">
-  <div class="input-field-main">
+<div class="mb-10">
+  <div class="flex gap-[4px]">
     <input
+      class="w-[20px]"
       type="checkbox"
       [id]="name()"
       [checked]="value"
@@ -11,6 +12,6 @@
       (change)="updateValue($event)"
     />
 
-    <label class="input-field-label" [for]="name()">{{ label() ?? 'DEFINE_LABEL' }}</label>
+    <label [for]="name()">{{ label() ?? 'DEFINE_LABEL' }}</label>
   </div>
 </div>

@@ -1,9 +1,28 @@
-<div class="input-field" [style]="{ 'margin-bottom': '10px' }">
-  <div class="input-field-main">
-    <label class="input-field-label" [for]="name()">{{ label() ?? 'DEFINE_LABEL' }}</label>
+<div class="mb-10">
+  <div
+    class="border border-solid border-gray-300 rounded-md relative pt-[24px] pr-[10px] pb-[8px] pl-[10px]"
+    [class]="{
+      'border-red-500': control.invalid && control.touched,
+      'bg-gray-100': control.disabled,
+    }"
+  >
+    <label
+      class="absolute top-[4px]"
+      [class]="{
+        'text-red-500': control.invalid && control.touched,
+        'bg-gray-100': control.disabled,
+      }"
+      [for]="name()"
+    >
+      {{ label() ?? 'DEFINE_LABEL' }}
+    </label>
 
     <input
       type="text"
+      [class]="{
+        'outline-none': true,
+        'placeholder:text-red-500': control.invalid && control.touched,
+      }"
       [placeholder]="placeholder() ?? 'DEFINE_PLACEHOLDER'"
       [id]="name()"
       [value]="value"
@@ -16,9 +35,9 @@
   </div>
 
   @if (control.invalid && control.touched && control.errors) {
-    <div class="input-field-errors">
+    <div class="mt-[4px] text-xs">
       @for (error of control.errors | keyvalue; track $index) {
-        <span [style]="{ color: 'red' }">{{ errorMessages()[error.key] }}</span>
+        <span class="text-red-500">{{ errorMessages()[error.key] }}</span>
       }
     </div>
   }

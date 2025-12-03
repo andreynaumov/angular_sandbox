@@ -7,9 +7,6 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   imports: [KeyValuePipe],
   templateUrl: './input.html',
   styleUrl: './input.scss',
-  host: {
-    '[class.ui-disabled]': 'control.disabled',
-  },
 })
 export class InputOld implements ControlValueAccessor {
   readonly name = input<string>('[input]');

@@ -7,9 +7,6 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   imports: [KeyValuePipe],
   templateUrl: './datepicker.html',
   styleUrl: './datepicker.scss',
-  host: {
-    '[class.ui-disabled]': 'control.disabled',
-  },
 })
 export class DatepickerOld implements ControlValueAccessor {
   readonly name = input<string>('[input]');

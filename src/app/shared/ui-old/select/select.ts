@@ -1,4 +1,4 @@
-import { KeyValuePipe } from '@angular/common';
+import { KeyValuePipe, NgTemplateOutlet } from '@angular/common';
 import { Component, computed, effect, input, Optional, Self, signal, untracked } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
@@ -9,11 +9,11 @@ export type SelectOption<T> = {
 
 @Component({
   selector: 'ui-old-select',
-  imports: [KeyValuePipe],
+  imports: [KeyValuePipe, NgTemplateOutlet],
   templateUrl: './select.html',
   styleUrl: './select.scss',
   host: {
-    '[class.ui-disabled]': 'control.disabled',
+    class: 'relative',
   },
 })
 export class SelectOld<T extends unknown> implements ControlValueAccessor {
