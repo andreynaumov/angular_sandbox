@@ -1,6 +1,6 @@
 <div class="ui-select" (click)="toggle()">
   <div class="ui-select__value">
-    {{ selectValue() }}
+    {{ selectedOption()?.label ?? label() }}
   </div>
 
   <div class="ui-select__arrow">▾</div>

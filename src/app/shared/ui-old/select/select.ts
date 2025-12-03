@@ -25,10 +25,7 @@ export class SelectOld<T extends unknown> implements ControlValueAccessor {
   readonly errorMessages = input<Record<string, string>>({});
   readonly options = input<SelectOption<T>[]>([]);
 
-  readonly selectValue = computed(() => {
-    const currentOption = this.options()?.find((option) => option.value === this.value());
-    return currentOption ? currentOption.label : this.placeholder();
-  });
+  readonly selectedOption = computed(() => this.options()?.find((option) => option.value === this.value()));
 
   readonly isOpen = signal(false);
 
@@ -42,34 +39,13 @@ export class SelectOld<T extends unknown> implements ControlValueAccessor {
       this.control.valueAccessor = this;
     }
 
-    /**
-     * Следит за списком options() и автоматически сбрасывает значение,
-     * если текущее value() отсутствует среди новых опций.
-     *
-     * Используется для кейса, когда:
-     * - в селекте уже выбрано значение,
-     * - options обновляются динамически,
-     * - новое множество options не содержит текущего значения.
-     *
-     * Важно:
-     * - value() читается через untracked(), чтобы эффект не зависел от value
-     *   и не запускался повторно при вызове value.set().
-     * - Эффект реагирует только на изменения options().
-     */
     effect(() => {
-      const options = this.options();
-      if (!options?.length) return;
+      if (this.selectedOption()) return;
 
-      const currentValue = untracked(this.value);
-      if (currentValue == null) return;
-
-      const exists = options.some((option) => option.value === currentValue);
-      if (!exists) {
-        queueMicrotask(() => {
-          this.value.set(null);
-          this.#onChange(null);
-        });
-      }
+      queueMicrotask(() => {
+        this.value.set(null);
+        this.#onChange(null);
+      });
     });
   }
 
