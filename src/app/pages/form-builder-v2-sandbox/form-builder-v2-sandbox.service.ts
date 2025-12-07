@@ -22,7 +22,7 @@ type ToForm<T extends Record<string, unknown>> = {
 };
 
 @Injectable()
-export class FormSandboxService implements OnDestroy {
+export class FormBuilderV2SandboxService implements OnDestroy {
   #form = new FormGroup<UserForm>({
     registrationAddress: new FormControl<string | null>(null),
     realEstate: new FormGroup({

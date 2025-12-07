@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class MainLayout {
   menuItems = [
     { link: 'form-builder-sandbox', label: 'Form builder sandbox' },
-    { link: 'form-sandbox', label: 'Form Sandbox' },
+    { link: 'form-builder-v2-sandbox', label: 'Form builder v2 sandbox' },
     { link: 'ui-input', label: 'UI Input' },
     { link: 'ui-checkbox', label: 'UI Checkbox' },
     { link: 'ui-datepicker', label: 'UI Datepicker' },

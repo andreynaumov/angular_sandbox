@@ -11,8 +11,8 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/form-builder-sandbox/form-builder-sandbox').then((f) => f.FormBuilderSandbox),
   },
   {
-    path: 'form-sandbox',
-    loadComponent: () => import('./pages/form-sandbox/form-sandbox').then((f) => f.FormSandbox),
+    path: 'form-builder-v2-sandbox',
+    loadComponent: () => import('./pages/form-builder-v2-sandbox/form-builder-v2-sandbox').then((f) => f.FormBuilderV2Sandbox),
   },
   {
     path: 'ui-input',
