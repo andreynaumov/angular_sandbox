@@ -11,10 +11,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/example-form/example-form').then((f) => f.ExampleForm),
   },
   {
-    path: 'common-form',
-    loadComponent: () => import('./pages/common-form/common-form').then((f) => f.CommonForm),
-  },
-  {
     path: 'form-sandbox',
     loadComponent: () => import('./pages/form-sandbox/form-sandbox').then((f) => f.FormSandbox),
   },

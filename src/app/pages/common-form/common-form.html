@@ -1,9 +1,0 @@
-@let formSchemaValue = formSchema();
-
-@if (formSchemaValue) {
-  <app-form [form]="form" [formSchema]="formSchemaValue" [formModel]="formModel()" (submitEvent)="logFormValue($event)">
-    <!-- <ng-template appCustomField="hasChildren" let-control="control" let-fieldSchema="fieldSchema">
-      <mat-checkbox [formControl]="control">Has children</mat-checkbox>
-    </ng-template> -->
-  </app-form>
-}
