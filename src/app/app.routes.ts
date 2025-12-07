@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'common-form',
+    redirectTo: 'form-builder-sandbox',
   },
   {
     path: 'form-builder-sandbox',
