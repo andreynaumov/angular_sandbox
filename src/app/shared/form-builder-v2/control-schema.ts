@@ -119,6 +119,12 @@ export class ControlSchema<T> extends BaseSchema {
     return this;
   }
 
+  runDependencyTracking(): void {
+    this.#dependencies.forEach((dependency) => {
+      dependency.subscribe();
+    });
+  }
+
   runDependencies(): void {
     this.#dependencies.forEach((dependency) => {
       dependency.runOnce();

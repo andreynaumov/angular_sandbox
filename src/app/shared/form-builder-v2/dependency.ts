@@ -11,8 +11,15 @@ export class Dependency<R> {
   ) {
     effect(() => {
       if (sourceControlSchema.value().isHide()) {
+        // Когда поле скрывается, отписываемся от изменений
         this.unsubscribe();
       } else {
+        // Когда поле становится видимым:
+        // - оставляем текущую подписку, если она есть
+        // - или подписываемся заново
+        // TODO! добавить тест на этот кейс
+        if (this.#subscription) return;
+
         this.subscribe();
       }
     });
@@ -23,7 +30,9 @@ export class Dependency<R> {
 
     this.#subscription?.unsubscribe();
     this.#subscription = control.valueChanges.pipe(startWith(control.value), distinctUntilChanged()).subscribe((value) => {
-      untracked(() => this.dependencyEffectFn(value));
+      untracked(() => {
+        this.dependencyEffectFn(value);
+      });
     });
   }
 

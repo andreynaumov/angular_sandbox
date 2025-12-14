@@ -1,19 +1,26 @@
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ControlSchema } from './control-schema';
 import { GroupSchema } from './group-schema';
+import { DestroyRef, inject } from '@angular/core';
 
 export function createFormSchema<T extends FormGroup>(
   name: string,
   form: T,
   schemaFn: (form: GroupSchemaWithProperties<T>) => void,
 ): GroupSchemaWithProperties<T> {
+  const destroyRef = inject(DestroyRef);
+
   const baseSchema = new GroupSchema(name, form);
 
   // Оборачиваем в Proxy с правильной типизацией
   const formSchema = wrapGroupSchema(baseSchema, form);
 
   schemaFn(formSchema);
-  // formSchema.runDependencyTracing();
+  formSchema.runDependencyTracking();
+
+  destroyRef.onDestroy(() => {
+    formSchema.destroyDependencyTracking();
+  });
 
   return formSchema;
 }
