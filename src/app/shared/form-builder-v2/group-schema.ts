@@ -4,6 +4,10 @@ import { BaseSchema } from './base-schema';
 
 export type SchemaItem = GroupSchema<Record<string, AbstractControl>> | ControlSchema<unknown>;
 
+/**
+ * Схема для групп форм с поддержкой рекурсивной структуры и автоматическим управлением жизненным циклом.
+ * Управляет вложенными схемами и предоставляет унифицированный API для отслеживания зависимостей.
+ */
 export class GroupSchema<T extends Record<string, AbstractControl>> extends BaseSchema {
   readonly #schemaList: Array<SchemaItem> = [];
   readonly schemaObject: Record<string, SchemaItem> = {};
@@ -23,7 +27,7 @@ export class GroupSchema<T extends Record<string, AbstractControl>> extends Base
       }
 
       if (!schema) {
-        throw new Error(`Unknown control type with name: ${name}`);
+        throw new Error(`Неподдерживаемый тип контрола для поля "${name}". Поддерживаются только FormControl и FormGroup.`);
       }
 
       this.#schemaList.push(schema);
@@ -31,31 +35,43 @@ export class GroupSchema<T extends Record<string, AbstractControl>> extends Base
     });
   }
 
-  // Метод для получения массива схем для использования в шаблонах
+  /**
+   * Возвращает массив схем для итерации в шаблоне
+   */
   schemas(): Array<SchemaItem> {
     return this.#schemaList;
   }
 
-  addControlField(name: string, schema: ControlSchema<any>) {
+  /**
+   * Добавляет новую схему контрола в группу
+   * @param name - Имя контрола
+   * @param schema - Схема контрола для добавления
+   */
+  addControlField(name: string, schema: ControlSchema<any>): void {
     if (name in this.schemaObject) {
-      console.warn(`Schema with "${name}" name is already exists in root schema`);
+      console.warn(`Схема с именем "${name}" уже существует в группе "${this.controlName}". Пропускаем добавление.`);
       return;
     }
 
     this.#schemaList.push(schema);
-
     this.schemaObject[name] = schema;
   }
 
-  runDependencyTracking(): void {
+  /**
+   * Запускает отслеживание зависимостей для всех вложенных схем рекурсивно
+   */
+  startDependencyTracking(): void {
     this.#schemaList.forEach((schema) => {
-      schema.runDependencyTracking();
+      schema.startDependencyTracking();
     });
   }
 
-  runDependencies(): void {
+  /**
+   * Выполняет все зависимости один раз для всех вложенных схем рекурсивно
+   */
+  executeDependencies(): void {
     this.#schemaList.forEach((schema) => {
-      schema.runDependencies();
+      schema.executeDependencies();
     });
   }
 
@@ -67,15 +83,30 @@ export class GroupSchema<T extends Record<string, AbstractControl>> extends Base
     this.#schemaList.forEach((schema) => {
       schema.destroyDependencyTracking();
     });
+    this.#schemaList.length = 0;
+
+    // Очищаем объект схем
+    for (const key in this.schemaObject) {
+      delete this.schemaObject[key];
+    }
   }
 
-  forLog(schemaList: Array<SchemaItem> = this.#schemaList): any {
+  /**
+   * Создает отладочное представление дерева схем
+   * Полезно для логирования и отладки
+   */
+  toDebugObject(schemaList: Array<SchemaItem> = this.#schemaList): any {
     return Object.fromEntries(
       schemaList.map((schema) => [
         schema.controlName,
         schema instanceof GroupSchema
-          ? this.forLog(schema.#schemaList)
-          : { value: schema.value().control.value, isHide: schema.value().isHide() },
+          ? this.toDebugObject(schema.#schemaList)
+          : {
+              value: schema.value().control.value,
+              isHide: schema.value().isHide(),
+              fieldType: schema.meta().type(),
+              label: schema.meta().label(),
+            },
       ]),
     );
   }

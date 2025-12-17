@@ -4,16 +4,22 @@ import { BaseSchema } from './base-schema';
 import { SelectOption } from '@ui-old/select/select';
 import { Dependency } from './dependency';
 
+export type FieldType = 'input' | 'checkbox' | 'date' | 'select';
+
+/**
+ * Схема для отдельных элементов управления формы с реактивными возможностями и управлением зависимостями.
+ * Предоставляет fluent API для конфигурации и автоматическое управление жизненным циклом.
+ */
 export class ControlSchema<T> extends BaseSchema {
   readonly #isHide = signal(false);
   readonly #label = signal<string>('[null]');
   readonly #placeholder = signal<string>('[null]');
-  readonly #fieldType = signal<'input' | 'checkbox' | 'date' | 'select'>('input');
+  readonly #fieldType = signal<FieldType>('input');
   readonly #options = signal<SelectOption<T>[]>([]);
 
   readonly #dependencies: Dependency<any>[] = [];
 
-  #blur: (value: T) => void = () => undefined;
+  #blurHandler: (value: T) => void = () => undefined;
 
   constructor(
     name: string,
@@ -22,6 +28,9 @@ export class ControlSchema<T> extends BaseSchema {
     super(name, 'control');
   }
 
+  /**
+   * Возвращает метаданные для отображения в шаблоне
+   */
   meta() {
     return {
       name: this.controlName,
@@ -29,10 +38,13 @@ export class ControlSchema<T> extends BaseSchema {
       label: this.#label,
       placeholder: this.#placeholder,
       options: this.#options,
-      blurFn: this.#blur,
+      blurFn: this.#blurHandler,
     };
   }
 
+  /**
+   * Возвращает реактивные значения для привязки к шаблону
+   */
   value() {
     return {
       control: this.control,
@@ -40,57 +52,96 @@ export class ControlSchema<T> extends BaseSchema {
     };
   }
 
-  onBlur(fn: (value: T) => void) {
-    this.#blur = fn;
+  /**
+   * Устанавливает тип поля
+   */
+  setFieldType(fieldType: FieldType): this {
+    this.#fieldType.set(fieldType);
     return this;
   }
 
-  addMeta(params: { fieldType: 'input' | 'checkbox' | 'date' | 'select'; label: string; placeholder: string }): this {
+  /**
+   * Устанавливает подпись поля
+   */
+  setLabel(label: string): this {
+    this.#label.set(label);
+    return this;
+  }
+
+  /**
+   * Устанавливает placeholder поля
+   */
+  setPlaceholder(placeholder: string): this {
+    this.#placeholder.set(placeholder);
+    return this;
+  }
+
+  /**
+   * Устанавливает полные метаданные поля за один вызов
+   */
+  setMeta(params: { fieldType: FieldType; label: string; placeholder: string }): this {
     const { fieldType, label, placeholder } = params;
     this.#fieldType.set(fieldType);
     this.#label.set(label);
     this.#placeholder.set(placeholder);
-
     return this;
   }
 
+  /**
+   * Устанавливает обработчик события blur
+   */
+  onBlur(handler: (value: T) => void): this {
+    this.#blurHandler = handler;
+    return this;
+  }
+
+  /**
+   * Добавляет опции для полей типа select
+   * Примечание: Этот метод должен использоваться только для полей типа 'select'
+   */
   addOptions(options: SelectOption<T>[]): this {
+    if (this.#fieldType() !== 'select') {
+      console.warn(`Опции могут быть установлены только для типа поля 'select'. Текущий тип: ${this.#fieldType()}`);
+    }
     this.#options.set(options);
     return this;
   }
 
+  /**
+   * Добавляет валидаторы к элементу управления формы
+   */
   addValidators(validators: ValidatorFn[]): this {
     this.control.addValidators(validators);
     return this;
   }
 
   /**
-   * Добавляет зависимость скрытия поля от значения другого контрола
-   * @param sourceControlSchema - схема контрола-источника
-   * @param logicFn - функция, возвращающая true если поле должно быть скрыто
+   * Добавляет зависимость скрытия от другого контрола
+   * @param sourceControlSchema - Исходный контрол для зависимости
+   * @param predicate - Функция, возвращающая true, когда это поле должно быть скрыто
    */
-  addHideDependency<R>(sourceControlSchema: ControlSchema<R>, logicFn: (value: R) => boolean): this {
+  addHideDependency<R>(sourceControlSchema: ControlSchema<R>, predicate: (value: R) => boolean): this {
     this.#addDependency(sourceControlSchema, (result) => {
-      const isHide = logicFn(result);
+      const shouldHide = predicate(result);
 
-      if (isHide) {
+      if (shouldHide) {
         this.control.reset();
       }
 
-      this.#isHide.set(isHide);
+      this.#isHide.set(shouldHide);
     });
 
     return this;
   }
 
   /**
-   * Добавляет зависимость блокировки поля от значения другого контрола
-   * @param sourceControlSchema - схема контрола-источника
-   * @param logicFn - функция, возвращающая true если поле должно быть заблокировано
+   * Добавляет зависимость отключения от другого контрола
+   * @param sourceControlSchema - Исходный контрол для зависимости
+   * @param predicate - Функция, возвращающая true, когда это поле должно быть отключено
    */
-  addDisableDependency<R>(sourceControlSchema: ControlSchema<R>, logicFn: (value: R) => boolean): this {
+  addDisableDependency<R>(sourceControlSchema: ControlSchema<R>, predicate: (value: R) => boolean): this {
     this.#addDependency(sourceControlSchema, (result) => {
-      if (logicFn(result)) {
+      if (predicate(result)) {
         this.control.disable();
       } else {
         this.control.enable();
@@ -101,14 +152,14 @@ export class ControlSchema<T> extends BaseSchema {
   }
 
   /**
-   * Добавляет зависимость валидаторов от значения другого контрола
-   * @param sourceControlSchema - схема контрола-источника
-   * @param validators - валидаторы, которые будут добавлены/удалены
-   * @param logicFn - функция, возвращающая true если валидаторы должны быть активны
+   * Добавляет условные валидаторы на основе значения другого контрола
+   * @param sourceControlSchema - Исходный контрол для зависимости
+   * @param validators - Валидаторы для условного добавления/удаления
+   * @param predicate - Функция, возвращающая true, когда валидаторы должны быть активны
    */
-  addValidatorsDependency<R>(sourceControlSchema: ControlSchema<R>, validators: ValidatorFn[], logicFn: (value: R) => boolean): this {
+  addValidatorsDependency<R>(sourceControlSchema: ControlSchema<R>, validators: ValidatorFn[], predicate: (value: R) => boolean): this {
     this.#addDependency(sourceControlSchema, (result) => {
-      if (logicFn(result)) {
+      if (predicate(result)) {
         this.control.addValidators(validators);
       } else {
         this.control.removeValidators(validators);
@@ -119,33 +170,41 @@ export class ControlSchema<T> extends BaseSchema {
     return this;
   }
 
-  runDependencyTracking(): void {
+  /**
+   * Запускает отслеживание всех зависимостей
+   */
+  startDependencyTracking(): void {
     this.#dependencies.forEach((dependency) => {
       dependency.subscribe();
     });
   }
 
-  runDependencies(): void {
+  /**
+   * Выполняет все зависимости один раз без подписки
+   */
+  executeDependencies(): void {
     this.#dependencies.forEach((dependency) => {
       dependency.runOnce();
     });
   }
 
   /**
-   * Очищает все подписки и помечает схему как уничтоженную
+   * Полностью уничтожает схему и очищает все ресурсы
    * Должен вызываться при уничтожении компонента/сервиса для предотвращения утечек памяти
    */
   destroyDependencyTracking(): void {
     this.#dependencies.forEach((dependency) => {
-      dependency.unsubscribe();
+      dependency.destroy();
     });
+    this.#dependencies.length = 0;
   }
 
   /**
-   * Общий метод для создания подписки на изменения зависимого контрола
+   * Создает и сохраняет отношения зависимости
    * @private
    */
   #addDependency<R>(sourceControlSchema: ControlSchema<R>, callback: (result: R) => void): void {
-    this.#dependencies.push(new Dependency(sourceControlSchema, callback));
+    const dependency = new Dependency(sourceControlSchema, callback);
+    this.#dependencies.push(dependency);
   }
 }

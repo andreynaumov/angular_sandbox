@@ -18,7 +18,7 @@ type ToForm<T extends Record<string, unknown>> = {
 };
 
 @Injectable()
-export class FormBuilderV2SandboxService implements OnDestroy {
+export class FormBuilderV2SandboxService {
   #form = new FormGroup<UserForm>({
     registrationAddress: new FormControl<string | null>(null),
     addressMatches: new FormControl<boolean | null>(null),
@@ -35,17 +35,17 @@ export class FormBuilderV2SandboxService implements OnDestroy {
     };
 
     formSchema.registrationAddress
-      .addMeta({ fieldType: 'input', label: 'Registration address', placeholder: 'Input registration address...' })
+      .setMeta({ fieldType: 'input', label: 'Registration address', placeholder: 'Input registration address...' })
       .onBlur((value) => {
         console.log('on blur: ', value);
       });
 
     formSchema.addressMatches
-      .addMeta({ fieldType: 'checkbox', label: 'Is match addresses', placeholder: '' })
+      .setMeta({ fieldType: 'checkbox', label: 'Is match addresses', placeholder: '' })
       .addHideDependency(formSchema.registrationAddress, (value) => !isValidAddress(value));
 
     formSchema.address
-      .addMeta({ fieldType: 'input', label: 'Real estate address', placeholder: 'Input real estate address...' })
+      .setMeta({ fieldType: 'input', label: 'Real estate address', placeholder: 'Input real estate address...' })
       .addHideDependency(formSchema.addressMatches, (value) => value === true);
   });
 
@@ -57,14 +57,14 @@ export class FormBuilderV2SandboxService implements OnDestroy {
 
   updateForm() {
     this.#form.setValue(this.user, { emitEvent: false });
-    this.formSchema.runDependencies();
+    this.formSchema.executeDependencies();
   }
 
   addField(params: { name: 'birthdate' | 'age'; label: string; placeholder: string; fieldType: 'date' | 'input' | 'checkbox' }) {
     const { name, label, placeholder, fieldType } = params;
 
     const control = new FormControl<string | null>(null);
-    const controlSchema = new ControlSchema(name, control).addMeta({ fieldType, label, placeholder });
+    const controlSchema = new ControlSchema(name, control).setMeta({ fieldType, label, placeholder });
 
     this.#form.addControl(name, control);
     this.formSchema.addControlField(name, controlSchema);
@@ -72,10 +72,5 @@ export class FormBuilderV2SandboxService implements OnDestroy {
 
   submit() {
     console.log(this.#form.getRawValue());
-  }
-
-  ngOnDestroy(): void {
-    // Очищаем все подписки в схемах для предотвращения утечек памяти
-    this.formSchema.destroyDependencyTracking();
   }
 }

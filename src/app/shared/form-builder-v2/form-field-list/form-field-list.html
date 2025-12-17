@@ -1,48 +1,57 @@
 @let formSchema = schema();
 
-@for (schema of formSchema.schemas(); track $index) {
+@for (schema of formSchema.schemas(); track schema.controlName) {
   @if (schema.isControlSchema()) {
-    @let isShow = !schema.value().isHide();
+    @let schemaValue = schema.value();
+    @let isVisible = !schemaValue.isHide();
 
-    @if (isShow) {
-      @let control = schema.value().control;
-      @let name = schema.meta().name;
-      @let label = schema.meta().label();
-      @let placeholder = schema.meta().placeholder();
-      @let blurFn = schema.meta().blurFn;
-      @let options = schema.meta().options();
+    @if (isVisible) {
+      @let control = schemaValue.control;
+      @let schemaMeta = schema.meta();
+      @let fieldName = schemaMeta.name;
+      @let fieldLabel = schemaMeta.label();
+      @let fieldPlaceholder = schemaMeta.placeholder();
+      @let fieldType = schemaMeta.type();
+      @let blurHandler = schemaMeta.blurFn;
+      @let selectOptions = schemaMeta.options();
 
-      @switch (schema.meta().type()) {
+      @switch (fieldType) {
         @case ('input') {
           <ui-old-input
             [formControl]="control"
-            [name]="name"
-            [label]="label"
-            [placeholder]="placeholder"
-            (blurEvent)="blurFn(control.value)"
+            [name]="fieldName"
+            [label]="fieldLabel"
+            [placeholder]="fieldPlaceholder"
+            (blurEvent)="blurHandler(control.value)"
           />
         }
         @case ('checkbox') {
-          <ui-old-checkbox [formControl]="control" [name]="name" [label]="label" />
+          <ui-old-checkbox [formControl]="control" [name]="fieldName" [label]="fieldLabel" />
         }
         @case ('date') {
           <ui-old-datepicker
             [formControl]="control"
-            [name]="name"
-            [label]="label"
-            [placeholder]="placeholder"
-            (blurEvent)="blurFn(control.value)"
+            [name]="fieldName"
+            [label]="fieldLabel"
+            [placeholder]="fieldPlaceholder"
+            (blurEvent)="blurHandler(control.value)"
           />
         }
         @case ('select') {
-          <ui-old-select [formControl]="control" [name]="name" [label]="label" [placeholder]="placeholder" [options]="options" />
+          <ui-old-select
+            [formControl]="control"
+            [name]="fieldName"
+            [label]="fieldLabel"
+            [placeholder]="fieldPlaceholder"
+            [options]="selectOptions"
+          />
         }
       }
     }
   }
 
   @if (schema.isGroupSchema()) {
-    <div [style]="{ padding: '10px 20px' }">
+    <div class="nested-form-group">
       <app-form-field-list [schema]="schema" />
     </div>
   }

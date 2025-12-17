@@ -90,7 +90,7 @@ describe('createFormSchema', () => {
       };
 
       form.setValue(formValue, { emitEvent: false });
-      schema.runDependencies();
+      schema.executeDependencies();
       // it works too
       // form.setValue(formValue);
 

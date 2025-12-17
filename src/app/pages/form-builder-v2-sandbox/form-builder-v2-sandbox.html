@@ -1,4 +1,4 @@
-<pre class="text-xs">{{ formSchema.forLog() | json }}</pre>
+<pre class="text-xs">{{ formSchema.toDebugObject() | json }}</pre>
 <app-form-field-list [schema]="formSchema" />
 
 <button (click)="handle()">add</button>
