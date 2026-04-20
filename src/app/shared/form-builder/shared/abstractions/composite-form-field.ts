@@ -8,7 +8,7 @@ import { FormModel } from '../types/form-model';
 /**
  * Базовый класс для составных компонентов полей формы (object, array).
  * Обрабатывает вложенные структуры форм и рендеринг пользовательских полей.
- * 
+ *
  * @template T - Тип контрола формы (FormGroup или FormArray)
  */
 @Directive()

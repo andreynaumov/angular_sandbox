@@ -8,9 +8,8 @@ describe('UiCheckbox', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiCheckbox]
-    })
-    .compileComponents();
+      imports: [UiCheckbox],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UiCheckbox);
     component = fixture.componentInstance;

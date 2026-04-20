@@ -8,9 +8,8 @@ describe('UiDatepicker', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UiDatepicker]
-    })
-    .compileComponents();
+      imports: [UiDatepicker],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UiDatepicker);
     component = fixture.componentInstance;
